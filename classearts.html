@@ -1,0 +1,83 @@
+<html>
+<head>
+<meta charset="utf8">
+<title>classe Arts</title>
+<style>
+p#label {
+	background-color:#BBE;
+	width:300px;
+	min-height:50px;
+	border: 1px solid green;
+}
+
+canvas {
+	margin-left: 10%;
+	margin-top:50px;
+	margin-bottom:15px;
+}
+</style>
+</head>
+
+<body>
+<canvas width="986" height="50"></canvas>
+
+<p id="label">
+Survolez le graphe avec la souris
+</p>
+
+<a href="#" id="save" download="PSISTAR arts.png">Sauvegarder</a>
+<script>
+var w = 1006, h = 50, b=10;
+
+var c = document.querySelector("canvas");
+c.width=w; c.height=h;
+
+var ctx = c.getContext("2d");
+
+var classe = {"\u00c9mil GARNELL": {"ARTS ET M\u00c9TIERS ParisTech": 6, "ESTP": 5, "mines": 23, "Concours POLYTECH": 1}, "David NGUYEN-VAN-SANG": {"ESTP": 607, "mines": 907}, "Julien GOUNI": {}, "Sandra KOENIG": {"ARTS ET M\u00c9TIERS ParisTech": 135, "ESTP": 97, "mines": 247, "Concours POLYTECH": 86}, "Yassine BELAHCEN": {"ESTP": 924}, "Mohamed-Anis CHAGAR": {"ARTS ET M\u00c9TIERS ParisTech": 293, "ESTP": 280}, "Sami DRIDI": {}, "Julien GABET": {"mines": 495}, "In\u00e8s EL HAJEM": {"ARTS ET M\u00c9TIERS ParisTech": 139, "ESTP": 66, "mines": 323, "Concours POLYTECH": 41}, "Valentin GUYARD": {"mines": 976}, "Badr LAAOUAOUDA": {"ARTS ET M\u00c9TIERS ParisTech": 699, "ESTP": 376}, "Younes SRIHOU": {}, "Maxence RADJABI": {"ARTS ET M\u00c9TIERS ParisTech": 119, "mines": 419}, "Othman FEZZAZ": {"ARTS ET M\u00c9TIERS ParisTech": 251, "ESTP": 142, "mines": 531, "Concours POLYTECH": 118}, "Arthur BOHAN": {"ARTS ET M\u00c9TIERS ParisTech": 484, "ESTP": 309}, "Saad OUALI ALAMI": {"Concours POLYTECH": 316}, "Nicolas MARCOU": {"ARTS ET M\u00c9TIERS ParisTech": 195, "mines": 94}, "Salim NADIR": {"ARTS ET M\u00c9TIERS ParisTech": 472, "ESTP": 425}, "Alexis ROUGE CARRASSAT": {}, "Paul CONNETABLE": {"mines": 745}, "Laurence DANEL": {"EFREI Villejuif": 56, "ESME Sudria Paris": 138, "Concours POLYTECH": 742, "ESIGELEC Rouen": 46, "EPF Sceaux-Troyes-Montpellier": 10, "ECE Paris": 137}, "Pierre CAUSSANEL": {"ISEP": 73, "ISEN-Lille": 73, "ECE Paris": 94, "ISEN-Brest": 73, "EFREI Villejuif": 25, "ESTP": 710, "Concours POLYTECH": 275, "ISEN-Toulon": 73, "ESAIP": 73, "ESEO": 73, "HEI": 73, "ESIEE Paris": 2}, "Ophir LOJKINE": {"ESTP": 366, "mines": 629, "Concours POLYTECH": 123}, "Hamza EL ABBOUBI": {"ARTS ET M\u00c9TIERS ParisTech": 737, "ESTP": 546, "mines": 849}, "Pierre-Louis LAMURE": {"ESTP": 665, "Concours POLYTECH": 268}, "H\u00e9l\u00e8ne CAILLE": {}, "Zineb ABDALLAOUI MAAN": {"ARTS ET M\u00c9TIERS ParisTech": 504, "ESTP": 284, "mines": 316, "ECE Paris": 48}, "Alexandre ORHAN": {}, "Simon DEVARADJA": {"ARTS ET M\u00c9TIERS ParisTech": 402, "ESTP": 338, "mines": 700, "Concours POLYTECH": 363}, "Gbenoukpo AKOTO": {"ARTS ET M\u00c9TIERS ParisTech": 571, "mines": 576}, "Alexandre SIMON": {"ARTS ET M\u00c9TIERS ParisTech": 299, "mines": 106}, "Gabriel GUYOT-ROLLAND": {}, "Xavier GUILLEMOT": {"ARTS ET M\u00c9TIERS ParisTech": 392}, "Hugo FOURNIER": {}, "Thibault MENAGE": {"ARTS ET M\u00c9TIERS ParisTech": 603, "ESTP": 272, "mines": 534}, "Brendan L\u2019OLLIVIER": {}, "Tom GUILLAUMET": {"ESTP": 63, "mines": 561}, "Hugo ATTAL": {"mines": 900}, "David LUO": {"ARTS ET M\u00c9TIERS ParisTech": 468, "ESTP": 100, "mines": 482}, "Louis MODARRESI ESFES": {}, "Nasser SALEM": {}, "C\u00e9dric COLAS": {"mines": 552}, "Justine POTIN": {"ESTP": 982, "Concours POLYTECH": 800, "ECE Paris": 143}, "Jeanne MATHERON": {"ESTP": 737}, "Rashad KARANOUH": {"ARTS ET M\u00c9TIERS ParisTech": 120, "ESTP": 198, "mines": 111}, "Sol\u00e8ne CUDEY": {"ARTS ET M\u00c9TIERS ParisTech": 412, "ESTP": 390, "mines": 817, "Concours POLYTECH": 162}};
+var rangs = {};
+
+ctx.fillRect(0,0,w,h-b);
+
+for (var i=1; i<w; i+=100) {
+	var txt = ""+i;
+	var l = ctx.measureText(txt).width;
+	ctx.fillText(i, i-l/2, h);
+	if (i==1)i--;
+}
+
+ctx.fillStyle="yellow";
+for (var eleve in classe) {
+	var rang = classe[eleve]["ARTS ET MÉTIERS ParisTech"];
+	if (rang) {
+		rangs[rang] = eleve;
+		ctx.fillRect(rang-1, 0, 2, h-b);
+	}
+}
+
+ctx.fillStyle="red";
+ctx.fillRect(651, 0, 1, h-b); // Les arts
+
+var label = document.getElementById("label");
+c.onmousemove = function(e) {
+	var x = e.layerX - e.target.offsetLeft;
+	var y = e.layerY - e.target.offsetTop;
+
+	if (y<h-b) {
+		var nom;
+		if (nom = rangs[x]) {
+			nom = nom.split(" ");
+			var prenom = nom[0];
+			label.textContent = "n°" + x + " (" + prenom + ")";
+		} else {
+			label.textContent = "n°"+ x;
+		}
+	}
+}
+
+var saveLink = document.getElementById("save");
+saveLink.href = c.toDataURL("image/png");
+</script>
+
+</body>
+</html>

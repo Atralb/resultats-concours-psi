@@ -1,0 +1,85 @@
+<html>
+<head>
+<meta charset="utf8">
+<title>classe mine</title>
+<style>
+p#label {
+	background-color:#BBE;
+	width:300px;
+	min-height:50px;
+	border: 1px solid green;
+}
+
+canvas {
+	margin-left: 10%;
+	margin-top:50px;
+	margin-bottom:15px;
+}
+</style>
+</head>
+
+<body>
+<canvas width="986" height="50"></canvas>
+
+<p id="label">
+Survolez le graphe avec la souris
+</p>
+
+<a href="#" id="save" download="PSISTAR mines.png">Sauvegarder</a>
+<script>
+var w = 1000, h = 50, b=10;
+
+var c = document.querySelector("canvas");
+c.width=w; c.height=h;
+
+var ctx = c.getContext("2d");
+
+var classe = {23: "GARNELL Émil", 94: "MARCOU Nicolas", 106: "SIMON Alexandre", 111: "KARANOUH Rashad", 247: "KOENIG Sandra", 316: "ABDALLAOUI MAAN Zineb", 323: "EL HAJEM Inès", 419: "RADJABI Maxence", 482: "LUO David", 495: "GABET Julien", 531: "FEZZAZ Othman", 534: "MENAGE Thibault", 552: "COLAS Cédric", 561: "GUILLAUMET Tom", 629: "LOJKINE Ophir", 700: "DEVARADJA Simon", 745: "CONNETABLE Paul", 817: "CUDEY Solène", 849: "EL ABBOUBI Hamza", 900: "ATTAL Hugo", 976: "GUYARD Valentin"};
+
+var ecoles = {50: "MINES ParisTech", 144: "PONTS ParisTech", 293: "SUPAERO (ISAE) Toulouse", 317: "TELECOM ParisTech cursus Paris", 322: "ENSTA ParisTech", 371: "TELECOM ParisTech cursus Sophia", 803: "MINES de NANCY", 822: "MINES de SAINT-ETIENNE", 967: "TELECOM BRETAGNE"};
+
+ctx.fillRect(0,0,w,h-b);
+
+for (var i=1; i<w; i+=100) {
+	var txt = ""+i;
+	var l = ctx.measureText(txt).width;
+	ctx.fillText(i, i-l/2, h);
+	if (i==1)i--;
+}
+
+ctx.fillStyle="yellow";
+for (var rang in classe) {
+	ctx.fillRect(rang-1, 0, 2, h-b);
+}
+
+ctx.fillStyle="red";
+for (var rang in ecoles) {
+	ctx.fillRect(rang, 0, 1, h-b);
+}
+
+var label = document.getElementById("label");
+c.onmousemove = function(e) {
+	var x = e.layerX - e.target.offsetLeft;
+	var y = e.layerY - e.target.offsetTop;
+	for (var rang in ecoles) {
+		var ecole = ecoles[rang];
+		if (rang>x)break;
+	}
+
+	if (y<h-b) {
+		label.textContent = "n°"+ x + " : "+ecole;
+		var nom;
+		if (nom = classe[x]) {
+			nom = nom.split(" ");
+			var prenom = nom[nom.length-1];
+			label.textContent = "n°" + x + " (" + prenom + ") : " + ecole;
+		}
+	}
+}
+
+var saveLink = document.getElementById("save");
+saveLink.href = c.toDataURL("image/png");
+</script>
+
+</body>
+</html>
